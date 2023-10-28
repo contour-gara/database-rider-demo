@@ -1,4 +1,4 @@
-package org.contourgara.databaseriderdemo;
+package org.contourgara.databaserider;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;

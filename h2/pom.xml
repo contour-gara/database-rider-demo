@@ -9,9 +9,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>database-rider</artifactId>
+    <artifactId>h2</artifactId>
     <name>${project.artifactId}</name>
-    <description>Database Rider demo</description>
+    <description>H2 demo</description>
 
     <properties>
         <java.version>17</java.version>

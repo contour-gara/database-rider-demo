@@ -1,4 +1,4 @@
-package org.contourgara.databaseriderdemo;
+package org.contourgara.databaserider;
 
 import com.github.database.rider.core.api.configuration.DBUnit;
 import com.github.database.rider.core.api.connection.ConnectionHolder;

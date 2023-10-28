@@ -1,4 +1,4 @@
-package org.contourgara.databaseriderdemo;
+package org.contourgara.databaserider;
 
 public record Employee(
         String id,

@@ -9,9 +9,11 @@
     <packaging>pom</packaging>
 
     <name>database-rider-demo</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Demo project for Database Rider</description>
 
     <modules>
         <module>database-rider</module>
+        <module>dbunit</module>
+        <module>h2</module>
     </modules>
 </project>
