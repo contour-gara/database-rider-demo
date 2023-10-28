@@ -1,0 +1,8 @@
+employees:
+  - id: "1"
+    first_name: "Taro"
+    last_name: "Yamada"
+
+teams:
+  - id: "1"
+    name: "infrastructure"

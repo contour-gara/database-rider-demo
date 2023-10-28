@@ -1,0 +1,7 @@
+employees:
+  - id: "2"
+    first_name: "Kotaro"
+    last_name: "Suzuki"
+  - id: "1"
+    first_name: "Taro"
+    last_name: "Yamada"
