@@ -109,13 +109,13 @@ class EmployeeRepositoryimpleTest {
         @Test
         @DataSet(value = "datasets/setup/2table.yml")
         @ExpectedDataSet(value = "datasets/expected/1table.yml")
-        void 期待値の方がテーブルが少ない() {
+        void 期待値の方がテーブルが少なくても成功() {
         }
 
         @Test
         @DataSet(value = "datasets/setup/1table.yml")
         @ExpectedDataSet(value = "datasets/expected/2table.yml")
-        void 期待値の方がテーブルが多い() {
+        void 期待値の方がテーブルが多くても成功() {
         }
     }
 
@@ -124,13 +124,13 @@ class EmployeeRepositoryimpleTest {
         @Test
         @DataSet(value = "datasets/setup/2record.yml")
         @ExpectedDataSet(value = "datasets/expected/1record.yml")
-        void 期待値の方がレコードが少ない() {
+        void 期待値の方がレコードが少ないと失敗() {
         }
 
         @Test
         @DataSet(value = "datasets/setup/1record.yml")
         @ExpectedDataSet(value = "datasets/expected/2record.yml")
-        void 期待値のほうがレコードが多い() {
+        void 期待値のほうがレコードが多いと失敗() {
         }
 
         @Test
@@ -139,7 +139,7 @@ class EmployeeRepositoryimpleTest {
                 value = "datasets/expected/1record.yml",
                 compareOperation = CONTAINS
         )
-        void 期待値が含まれるかどうかだけをアサーション() {
+        void 期待値が含まれるかどうかをテストすれば成功() {
         }
     }
 
@@ -148,13 +148,13 @@ class EmployeeRepositoryimpleTest {
         @Test
         @DataSet(value = "datasets/setup/1record.yml")
         @ExpectedDataSet(value = "datasets/expected/undercolumn.yml")
-        void 期待値のカラムが少ない() {
+        void 期待値のカラムが少ないと成功() {
         }
 
         @Test
         @DataSet(value = "datasets/setup/1record.yml")
         @ExpectedDataSet(value = "datasets/expected/overcolumn.yml")
-        void 期待値のカラムが多い() {
+        void 期待値のカラムが多いと失敗() {
         }
     }
 
@@ -163,7 +163,7 @@ class EmployeeRepositoryimpleTest {
         @Test
         @DataSet(value = "datasets/setup/2record.yml")
         @ExpectedDataSet(value = "datasets/expected/2record-reverse.yml")
-        void レコードの順序が違う() {
+        void レコードの順序が違うと失敗() {
         }
 
         @Test
@@ -172,7 +172,7 @@ class EmployeeRepositoryimpleTest {
                 value = "datasets/expected/2record-reverse.yml",
                 compareOperation = CONTAINS
         )
-        void 含まれるかどうかをテストする() {
+        void 期待値が含まれるかどうかをテストすれば成功() {
         }
 
         @Test
@@ -181,7 +181,7 @@ class EmployeeRepositoryimpleTest {
                 value = "datasets/expected/2record-reverse.yml",
                 orderBy = "id"
         )
-        void レコードをソートする() {
+        void レコードをソートすると成功() {
         }
     }
 }
