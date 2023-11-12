@@ -5,7 +5,6 @@ import com.github.database.rider.core.api.connection.ConnectionHolder;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.junit5.api.DBRider;
-import org.assertj.core.api.Assertions;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -24,22 +23,22 @@ import java.util.Optional;
 
 import static com.github.database.rider.core.api.configuration.Orthography.LOWERCASE;
 import static com.github.database.rider.core.api.dataset.CompareOperation.CONTAINS;
-
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Testcontainers
 @DBRider
 @DBUnit(caseInsensitiveStrategy = LOWERCASE, cacheConnection = false)
-class EmployeeRepositoryimpleTest {
+class EmployeeRepositoryImplTest {
     // Test Container 起動
     @Container
     private static final PostgreSQLContainer<?> postgres =
             new PostgreSQLContainer<>(DockerImageName.parse(PostgreSQLContainer.IMAGE).withTag("11.9"))
                     .withUsername("user")
-                    .withPassword("password")
-                    .withDatabaseName("sample");
+                    .withPassword("p@ssw0rd")
+                    .withDatabaseName("demo");
 
-    // セータベース接続の定義
+    // Database Rider にデータベースの接続先を連携
     private static final ConnectionHolder connectionHolder =
             () -> DriverManager.getConnection(
                     postgres.getJdbcUrl(),
@@ -48,7 +47,7 @@ class EmployeeRepositoryimpleTest {
             );
 
     @Autowired
-    EmployeeRepositoryimple sut;
+    EmployeeRepositoryImpl sut;
 
     // Application.yml の値を Test Container の情報で上書き
     @DynamicPropertySource
@@ -75,9 +74,43 @@ class EmployeeRepositoryimpleTest {
         void YAMLファイルでデータセット() {
             // execute
             Optional<Employee> actual = sut.findById("1");
+
             // assert
             Optional<Employee> expected = Optional.of(new Employee("1", "Taro", "Yamada"));
-            Assertions.assertThat(actual).isEqualTo(expected);
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DataSet(value = "datasets/setup/findbyid.xml")
+        void XMLファイルでデータセット() {
+            // execute
+            Optional<Employee> actual = sut.findById("1");
+
+            // assert
+            Optional<Employee> expected = Optional.of(new Employee("1", "Taro", "Yamada"));
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DataSet(value = "datasets/setup/findbyid.json")
+        void JSONファイルでデータセット() {
+            // execute
+            Optional<Employee> actual = sut.findById("1");
+
+            // assert
+            Optional<Employee> expected = Optional.of(new Employee("1", "Taro", "Yamada"));
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DataSet(value = "datasets/setup/employees.csv")
+        void CSVファイルでデータセット() {
+            // execute
+            Optional<Employee> actual = sut.findById("1");
+
+            // assert
+            Optional<Employee> expected = Optional.of(new Employee("1", "Taro", "Yamada"));
+            assertThat(actual).isEqualTo(expected);
         }
 
         @Test
@@ -85,9 +118,28 @@ class EmployeeRepositoryimpleTest {
         void SQLファイルでデータセット() {
             // execute
             Optional<Employee> actual = sut.findById("1");
+
             // assert
             Optional<Employee> expected = Optional.of(new Employee("1", "Taro", "Yamada"));
-            Assertions.assertThat(actual).isEqualTo(expected);
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DataSet(value = {
+                "datasets/setup/findbyid.yml",
+                "datasets/setup/findbyid2.yml"
+        })
+        void 複数ファイルでデータセット() {
+            // execute
+            Optional<Employee> actual1 = sut.findById("1");
+            Optional<Employee> actual2 = sut.findById("2");
+
+            // assert
+            Optional<Employee> expected1 = Optional.of(new Employee("1", "Taro", "Yamada"));
+            assertThat(actual1).isEqualTo(expected1);
+
+            Optional<Employee> expected2 = Optional.of(new Employee("2", "Jiro", "Yamada"));
+            assertThat(actual2).isEqualTo(expected2);
         }
     }
 
@@ -99,6 +151,7 @@ class EmployeeRepositoryimpleTest {
         void YAMLファイルでアサーション() {
             // setup
             Employee employee = new Employee("1", "Taro", "Yamada");
+
             // execute
             sut.insert(employee);
         }
@@ -107,15 +160,15 @@ class EmployeeRepositoryimpleTest {
     @Nested
     class テーブルの過不足によるアサーションの挙動 {
         @Test
-        @DataSet(value = "datasets/setup/2table.yml")
+        @DataSet(cleanBefore = true, value = "datasets/setup/2table.yml")
         @ExpectedDataSet(value = "datasets/expected/1table.yml")
         void 期待値の方がテーブルが少なくても成功() {
         }
 
         @Test
-        @DataSet(value = "datasets/setup/1table.yml")
+        @DataSet(cleanBefore = true, value = "datasets/setup/1table.yml")
         @ExpectedDataSet(value = "datasets/expected/2table.yml")
-        void 期待値の方がテーブルが多くても成功() {
+        void 期待値の方がテーブルが多いと失敗() {
         }
     }
 

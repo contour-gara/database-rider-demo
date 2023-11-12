@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class H2ApplicationTest {
     @Autowired
-    EmployeeRepositoryimple employeeRepositoryimple;
+    EmployeeRepositoryImpl employeeRepositoryimple;
 
     @Test
     void contextLoads() {

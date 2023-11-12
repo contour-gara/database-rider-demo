@@ -19,7 +19,7 @@ import java.util.Optional;
 @SpringBootTest
 @DBRider
 @DBUnit(cacheConnection = false)
-class EmployeeRepositoryimpleTest {
+class EmployeeRepositoryImplTest {
     private static final String DB_URL = "jdbc:h2:mem:test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false";
     private static final String DB_USER = "sa";
     private static final String DB_PASSWORD = "sa";
@@ -28,7 +28,7 @@ class EmployeeRepositoryimpleTest {
             () -> DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
     @Autowired
-    EmployeeRepositoryimple sut;
+    EmployeeRepositoryImpl sut;
 
     @BeforeAll
     static void setUpAll() {
@@ -42,6 +42,7 @@ class EmployeeRepositoryimpleTest {
         void YAMLファイルでデータセット() {
             // execute
             Optional<Employee> actual = sut.findById("1");
+
             // assert
             Optional<Employee> expected = Optional.of(new Employee("1", "Taro", "Yamada"));
             Assertions.assertThat(actual).isEqualTo(expected);
@@ -52,6 +53,7 @@ class EmployeeRepositoryimpleTest {
         void SQLファイルでデータセット() {
             // execute
             Optional<Employee> actual = sut.findById("1");
+
             // assert
             Optional<Employee> expected = Optional.of(new Employee("1", "Taro", "Yamada"));
             Assertions.assertThat(actual).isEqualTo(expected);
@@ -66,6 +68,7 @@ class EmployeeRepositoryimpleTest {
         void YAMLファイルでアサーション() {
             // setup
             Employee employee = new Employee("1", "Taro", "Yamada");
+
             // execute
             sut.insert(employee);
         }

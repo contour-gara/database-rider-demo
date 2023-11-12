@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @EnableAutoConfiguration(exclude = {JdbcRepositoriesAutoConfiguration.class})
 class DatabaseRiderApplicationTests {
     @Autowired
-    EmployeeRepositoryimple employeeRepositoryimple;
+    EmployeeRepositoryImpl employeeRepositoryimple;
 
     @Test
     void contextLoads() {

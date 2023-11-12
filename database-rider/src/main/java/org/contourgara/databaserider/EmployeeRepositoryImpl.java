@@ -11,10 +11,10 @@ import java.util.Optional;
 
 @Repository
 @Slf4j
-public class EmployeeRepositoryimple implements EmployeeRepository {
+public class EmployeeRepositoryImpl implements EmployeeRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    public EmployeeRepositoryimple(NamedParameterJdbcTemplate jdbcTemplate) {
+    public EmployeeRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
